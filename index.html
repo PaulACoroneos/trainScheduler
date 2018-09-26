@@ -54,12 +54,12 @@
                 </div>
                 <div class="form-group">
                     <label for="time-name">First Train Time</label>
-                    <input type="text" class="form-control" id="time-name" aria-describedby="timehelp" placeholder="First departure time" required>
+                    <input type="datetime-local" class="form-control" id="time-name" aria-describedby="timehelp" placeholder="First departure time" required>
                     <small id="timehelp" class="form-text text-muted">(HH:mm - military time)</small>
                 </div>
                 <div class="form-group">
                     <label for="frequency-name">Frequency</label>
-                    <input type="text" class="form-control" id="frequency-name" aria-describedby="frequencyhelp" placeholder="time" required>
+                    <input type="number" class="form-control" id="frequency-name" aria-describedby="frequencyhelp" placeholder="time" required>
                     <small id="frequencyhelp" class="form-text text-muted">in minutes</small>
                 </div>
                 <button type="submit" class="btn btn-secondary w-100">Submit</button>
