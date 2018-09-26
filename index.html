@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <title>Train Scheduler</title>
+  </head>
+  <body>
+
+    <div class="container">
+        <header class="jumbotron">
+            <h1 class="display-4 text-center"><i class="fas fa-train"></i> Train Scheduler</h1>
+            <h2 class="lead text-center">A train scheduler for departures and arrivals using Firebase.</h2>
+        </header>
+    </div>
+
+    <div class="container">
+        <div class="arrivals mb-5">
+            <div class="element-header pl-2"><i class="fas fa-clock"></i> Current train schedule</div>
+            <div class="pl-2 pr-2">
+                <table class="table pl-1 pr-1">
+                    <thead>
+                        <tr>
+                            <th scope="col">Train Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Frequency(mins)</th>
+                            <th scope="col">Next Arrival</th>
+                            <th scope="col">Minutes Away</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body"></tbody>
+                </table>
+            </div>
+        </div>
+        <form class="arrivals mb-5">
+            <div class="element-header pl-2"><i class="far fa-plus-square"></i> Add train to schedule</div>
+            <div class="p-2">
+            <form>
+                <div class="form-group">
+                    <label for="train-name">Train Name</label>
+                    <input type="text" class="form-control" id="train-name" aria-describedby="trainhelp" placeholder="Name of train" required>
+                    <small id="trainhelp" class="form-text text-muted">Enter the name of the new train.</small>
+                </div>
+                <div class="form-group">
+                    <label for="destination-name">Destination</label>
+                    <input type="text" class="form-control" id="destination-name" aria-describedby="destinationhelp" placeholder="Name of destination" required>
+                    <small id="destinationhelp" class="form-text text-muted">Enter the name of the destination.</small>
+                </div>
+                <div class="form-group">
+                    <label for="time-name">First Train Time</label>
+                    <input type="text" class="form-control" id="time-name" aria-describedby="timehelp" placeholder="First departure time" required>
+                    <small id="timehelp" class="form-text text-muted">(HH:mm - military time)</small>
+                </div>
+                <div class="form-group">
+                    <label for="frequency-name">Frequency</label>
+                    <input type="text" class="form-control" id="frequency-name" aria-describedby="frequencyhelp" placeholder="time" required>
+                    <small id="frequencyhelp" class="form-text text-muted">in minutes</small>
+                </div>
+                <button type="submit" class="btn btn-secondary w-100">Submit</button>
+            </form>
+            </div>
+        </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+    <script src="./assets/javascript/script.js"></script>
+  </body>
+</html>
