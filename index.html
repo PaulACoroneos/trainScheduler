@@ -34,6 +34,7 @@
                             <th scope="col">Minutes Away</th>
                         </tr>
                     </thead>
+                    <!-- append data into this id-->
                     <tbody id="schedule-body"></tbody>
                 </table>
             </div>
@@ -54,13 +55,13 @@
                 </div>
                 <div class="form-group">
                     <label for="time-name">First Train Time</label>
-                    <input type="datetime-local" class="form-control" id="time-name" aria-describedby="timehelp" placeholder="First departure time" required>
-                    <small id="timehelp" class="form-text text-muted">(HH:mm - military time)</small>
+                    <input type="time" class="form-control" id="time-name" aria-describedby="timehelp" value="14:30" required>
+                    <small id="timehelp" class="form-text text-muted">hh:mm</small>
                 </div>
                 <div class="form-group">
                     <label for="frequency-name">Frequency</label>
-                    <input type="number" class="form-control" id="frequency-name" aria-describedby="frequencyhelp" placeholder="time" required>
-                    <small id="frequencyhelp" class="form-text text-muted">in minutes</small>
+                    <input type="number" class="form-control" id="frequency-name" aria-describedby="frequencyhelp" placeholder="time" required pattern="[0-9]{4}">
+                    <small id="frequencyhelp" class="form-text text-muted">minutes</small>
                 </div>
                 <button type="submit" class="btn btn-secondary w-100">Submit</button>
             </form>
@@ -69,7 +70,8 @@
     </div>
 
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/af.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
