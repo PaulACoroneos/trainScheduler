@@ -34,6 +34,8 @@ var employeeDir = database.ref("/employees");
       frequency: frequency,
     });
 
+    $(".arrival-form").trigger("reset");//clear form
+
   });
 
   //if there is something in the database add to the train table
@@ -56,7 +58,7 @@ var employeeDir = database.ref("/employees");
     var destinationDisplay = $("<td>");
     var timeDisplay = $("<td>");
     var frequencyDisplay = $("<td>");
-    var minutesDisplay = $("<td>");
+    var minutesDisplay = $("<td class='minutes-disp'>");
     console.log(time);
 
     nameDisplay.attr("scope","col");
@@ -71,9 +73,7 @@ var employeeDir = database.ref("/employees");
     console.log("until next train: "+ ((moment().unix("X")-moment(time, "hh:mm").unix("X"))/60)%frequency)
 
     //now time of next train is current time + minutes
-    var timeNext = moment().add(minutes,'m').format('hh:mm A');
-
-    
+    var timeNext = moment().add(minutes,'m').format('HH:mm');
 
     nameDisplay.html(name);
     destinationDisplay.html(destination);
@@ -86,3 +86,17 @@ var employeeDir = database.ref("/employees");
   },function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
   });
+
+  //create clock using moment.js to display to user and also update the train schedule (per minute)
+
+  function rollingClock() {
+    var clock = moment().format('HH:mm:ss');  //create clock with hours, minutes and seconds format
+    $("#current-time").html(clock); //append time to current-time element
+    setTimeout(rollingClock,1000);  //callback every second;
+    
+  }
+
+
+  //initialize timer
+  rollingClock();
+
