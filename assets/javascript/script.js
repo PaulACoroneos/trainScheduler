@@ -12,11 +12,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-var employeeDir = database.ref("employees");
-
-employeeDir.on("value", function(snapshot) {
-
-})
+var employeeDir = database.ref("/employees");
   
   //click event when submit is pressed
   $("button").on("click",function(e){
@@ -25,11 +21,34 @@ employeeDir.on("value", function(snapshot) {
     //store information from fields into vars
     var name = $("#train-name").val().trim();
     var destination = $("#destination-name").val().trim();
-    var time = $("#time-name").val().trim(); //moment($("#time-name").val().trim(),"HH:mm");  //convert this value to unix time  in ms using moment.js
+    var time = $("#time-name").val().trim(); 
     var frequency = $("#frequency-name").val().trim();
 
     //lets log to verify data is good
     console.log(name,destination,time,frequency);
+
+    employeeDir.push({
+      name: name,
+      destination: destination,
+      time: time,
+      frequency: frequency,
+    });
+
+  });
+
+  //if there is something in the database add to the train table
+  employeeDir.on("child_added", function(childSnapshot) {
+
+    // Log everything that's coming out of snapshot
+    console.log(childSnapshot.val().name);
+    console.log(childSnapshot.val().destination);
+    console.log(childSnapshot.val().time);
+    console.log(childSnapshot.val().frequency);
+
+    var name = childSnapshot.val().name;
+    var destination = childSnapshot.val().destination;
+    var time = childSnapshot.val().time;
+    var frequency = childSnapshot.val().frequency;
 
     //let's create a train object and append to the schedule
     var newRow = $("<tr>");
@@ -37,18 +56,33 @@ employeeDir.on("value", function(snapshot) {
     var destinationDisplay = $("<td>");
     var timeDisplay = $("<td>");
     var frequencyDisplay = $("<td>");
+    var minutesDisplay = $("<td>");
+    console.log(time);
 
     nameDisplay.attr("scope","col");
     destinationDisplay.attr("scope","col");
     timeDisplay.attr("scope","col");
     frequencyDisplay.attr("scope","col");
+    minutesDisplay.attr("scope","col");
+
+    //calculate difference of first train time minus current time modules the frequency between trains
+    var minutes = frequency - Math.floor(((moment().unix("X")-moment(time, "hh:mm").unix("X"))/60)%frequency);
+    console.log("Delta time; " + (moment().unix("X")-moment(time, "hh:mm").unix("X"))/60);
+    console.log("until next train: "+ ((moment().unix("X")-moment(time, "hh:mm").unix("X"))/60)%frequency)
+
+    //now time of next train is current time + minutes
+    var timeNext = moment().add(minutes,'m').format('hh:mm A');
+
+    
 
     nameDisplay.html(name);
     destinationDisplay.html(destination);
-    timeDisplay.html(time);
+    timeDisplay.html(timeNext);
     frequencyDisplay.html(frequency);
+    minutesDisplay.html(minutes);
 
-    newRow.append(nameDisplay,destinationDisplay,timeDisplay,frequencyDisplay);
-    //$("thead").append(newRow);
-
+    newRow.append(nameDisplay,destinationDisplay,frequencyDisplay,timeDisplay,minutesDisplay);
+    $("tbody").append(newRow);
+  },function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
   });
