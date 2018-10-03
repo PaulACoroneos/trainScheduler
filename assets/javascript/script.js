@@ -15,7 +15,7 @@ var database = firebase.database();
 var employeeDir = database.ref("/employees");
   
   //click event when submit is pressed
-  $("button").on("click",function(e){
+  $(".btn-secondary").on("click",function(e){
     console.log("clicked");
     e.preventDefault();
     //store information from fields into vars
@@ -59,6 +59,9 @@ var employeeDir = database.ref("/employees");
     var timeDisplay = $("<td>");
     var frequencyDisplay = $("<td>");
     var minutesDisplay = $("<td class='minutes-disp'>");
+    var removeDisplay = $("<td>");
+    var removeButton = $("<button>");
+    var removeForm = $("<form>");
     console.log(time);
 
     nameDisplay.attr("scope","col");
@@ -66,6 +69,7 @@ var employeeDir = database.ref("/employees");
     timeDisplay.attr("scope","col");
     frequencyDisplay.attr("scope","col");
     minutesDisplay.attr("scope","col");
+    removeDisplay.attr("scope","col");
 
     //calculate difference of first train time minus current time modules the frequency between trains
     var minutes = frequency - Math.floor(((moment().unix("X")-moment(time, "hh:mm").unix("X"))/60)%frequency);
@@ -80,8 +84,12 @@ var employeeDir = database.ref("/employees");
     timeDisplay.html(timeNext);
     frequencyDisplay.html(frequency);
     minutesDisplay.html(minutes);
+    removeButton.addClass("btn btn-danger");
+    removeButton.text("Remove");
+    removeForm.html(removeButton);
+    removeDisplay.append(removeForm);
 
-    newRow.append(nameDisplay,destinationDisplay,frequencyDisplay,timeDisplay,minutesDisplay);
+    newRow.append(nameDisplay,destinationDisplay,frequencyDisplay,timeDisplay,minutesDisplay,removeDisplay);
     $("tbody").append(newRow);
   },function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
@@ -96,6 +104,31 @@ var employeeDir = database.ref("/employees");
     
   }
 
+  //create on event when remove button is pressed for row to remove the entire row from the database
+  $(".table").on("click",".btn-danger",function(f){
+
+    f.preventDefault(); //don't refresh window
+    console.log("I detected a press!");
+    var trainName = $(this).closest('tr').find("td:first-child").text();
+    console.log(trainName);
+    employeeDir.once('value').then(function(snapshot) {
+
+      snapshot.forEach(function(snapshot1) {
+          console.log(snapshot1.key);
+          console.log(snapshot1.val().name);
+          if (snapshot1.val().name == trainName) {  //does child content match train clicked?
+
+            const key = snapshot1.key;
+            console.log("key found: "+ key);
+
+            // delete stickynote node from firebase
+            employeeDir.child(key).remove();
+          }
+      });
+    });
+    $(this).closest('tr').remove(); //delete closest tr to button
+
+  });
 
   //initialize timer
   rollingClock();
